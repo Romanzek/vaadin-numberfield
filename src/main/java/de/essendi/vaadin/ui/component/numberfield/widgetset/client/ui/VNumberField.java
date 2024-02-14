@@ -35,9 +35,12 @@ import de.essendi.vaadin.ui.component.numberfield.widgetset.shared.NumberFieldAt
  */
 public class VNumberField extends VTextField {
 
-	private NumberFieldAttributes attributes = new NumberFieldAttributes();
+	private static final String CLASSNAME_PROMPT = "prompt";
+	private static final String ATTR_INPUTPROMPT = "prompt";
 
-	private KeyPressHandler keyPressHandler = new KeyPressHandler() {
+	private final NumberFieldAttributes attributes = new NumberFieldAttributes();
+
+	private final KeyPressHandler keyPressHandler = new KeyPressHandler() {
 		/**
 		 * Do keystroke filtering (e.g. no letters) and validation for integer
 		 * (123) and decimal numbers (12.3) on keypress events.
@@ -126,8 +129,23 @@ public class VNumberField extends VTextField {
 			attributes.setGroupingSeparator((char) uidl
 					.getIntAttribute(ATTRIBUTE_GROUPING_SEPARATOR));
 
+		String text = "";
+
 		if (uidl.hasAttribute(ATTRIBUTE_SERVER_FORMATTED_VALUE))
-			setValue(uidl.getStringAttribute(ATTRIBUTE_SERVER_FORMATTED_VALUE));
+			text = uidl.getStringAttribute(ATTRIBUTE_SERVER_FORMATTED_VALUE);
+
+		String inputPrompt = uidl.getStringAttribute(ATTR_INPUTPROMPT);
+
+		boolean prompting = inputPrompt != null && getValue().isEmpty();
+		String fieldValue;
+	  if (prompting) {
+      fieldValue = isReadOnly() ? "" : inputPrompt;
+      addStyleDependentName(CLASSNAME_PROMPT);
+    } else {
+      fieldValue = text;
+      removeStyleDependentName(CLASSNAME_PROMPT);
+    }
+    setText(fieldValue);
 	}
 
 	private boolean isControlKey(int keyCode) {
@@ -156,11 +174,11 @@ public class VNumberField extends VTextField {
 		if (getSelectionLength() > 0) {
 			return previousText.substring(0, index)
 					+ charCode
-					+ previousText.substring(index + getSelectionLength(),
-							previousText.length());
+					+ previousText.substring(index + getSelectionLength()
+			);
 		} else {
 			return previousText.substring(0, index) + charCode
-					+ previousText.substring(index, previousText.length());
+					+ previousText.substring(index);
 		}
 	}
 

@@ -7,7 +7,7 @@
 	<groupId>org.vaadin.addons</groupId>
 	<artifactId>numberfield</artifactId>
 	<packaging>jar</packaging>
-	<version>0.5.4</version>
+	<version>0.5.5</version>
 	<name>NumberField (fixed)</name>
 
 	<licenses>
@@ -48,7 +48,7 @@
 				<configuration>
 					<webappDirectory>${project.build.directory}/${project.build.finalName}/VAADIN/widgetsets</webappDirectory>
 					<extraJvmArgs>-Xmx512M -Xss1024k</extraJvmArgs>
-					<runTarget></runTarget>
+					<runTarget/>
 					<hostedWebapp>${project.build.directory}/${project.build.finalName}</hostedWebapp>
 					<noServer>true</noServer>
 					<port>8081</port>
@@ -228,7 +228,7 @@
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
-			<version>4.9</version>
+			<version>4.13.2</version>
 			<scope>test</scope>
 		</dependency>
 	</dependencies>
